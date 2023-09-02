@@ -1,7 +1,7 @@
 version: '3'
 services:
-  reSwap-server:
-    container_name: schedulemate-server
+  reswap-server:
+    container_name: reswap-server
     build:
       context: .
       dockerfile: ./Dockerfile
