@@ -6,8 +6,8 @@ import { AuthService } from 'src/auth/auth.service';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LoginResponseDto } from 'src/auth/dto/auth.swagger.dto';
 
-@Controller('users')
-@ApiTags('Users')
+@Controller('user')
+@ApiTags('User')
 export class UserController {
   constructor(
     private readonly userService: UserService,
@@ -30,6 +30,10 @@ export class UserController {
     @Res() response: Response,
   ): Promise<void> {
     const user = await this.userService.createUser(request);
-    return await this.authService.login(user, response);
+    return await this.authService.login(
+      user,
+      response,
+      'User registered successfully',
+    );
   }
 }

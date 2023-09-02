@@ -7,6 +7,8 @@ import * as Joi from 'joi';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from 'src/user/user.module';
+import { LocalStrategy } from './strategies/local.strategy';
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   imports: [
@@ -16,7 +18,7 @@ import { UserModule } from 'src/user/user.module';
       isGlobal: true,
       validationSchema: Joi.object({
         JWT_SECRET: Joi.string().required(),
-        JWT_EXPIRIATION: Joi.number().required(),
+        JWT_EXPIRATION: Joi.number().required(),
         MONGODB_URI: Joi.string().required(),
       }),
       envFilePath: '.env',
@@ -33,7 +35,7 @@ import { UserModule } from 'src/user/user.module';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}

@@ -13,6 +13,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { LoginRequestDto, LoginResponseDto } from './dto/auth.swagger.dto';
+import { ApiResponse as APIresp } from 'src/constants/ApiResponse';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -37,7 +38,11 @@ export class AuthController {
     @CurrentUser() user: User,
     @Res({ passthrough: true }) response: Response,
   ) {
-    return await this.authService.login(user, response);
+    return await this.authService.login(
+      user,
+      response,
+      'User authenticated successfully',
+    );
   }
 
   @Get('logout')
@@ -69,6 +74,7 @@ export class AuthController {
   })
   @UseGuards(JwtAuthGuard)
   async getSelf(@CurrentUser() user: User) {
-    return user;
+    const res = new APIresp('User details based on token', null, 200, user);
+    return res.getResponse();
   }
 }
