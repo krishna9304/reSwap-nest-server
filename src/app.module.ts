@@ -13,7 +13,6 @@ import { AuthModule } from './auth/auth.module';
       isGlobal: true,
       validationSchema: Joi.object({
         PORT: Joi.number().required(),
-        MONGODB_URI: Joi.string().required(),
       }),
       envFilePath: '.env',
     }),
